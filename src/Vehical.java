@@ -14,5 +14,13 @@ public class Vehical {
         this.enginePower = enginePower;
         this.tireSize = terSize;
     }
+    
+    public boolean isHeavy() {
+        return type.equalsIgnoreCase("heavy");
+    }
+
+    public boolean isSports() {
+        return type.equalsIgnoreCase("sports");
+    }
 
 }
