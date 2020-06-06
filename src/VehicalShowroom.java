@@ -15,17 +15,17 @@ public class VehicalShowroom {
         scanner = new Scanner(System.in);
 
         String userInput;
-
+		
         while (true) {
             System.out.print("Enter command: ");
             userInput = scanner.next();
 
             if (userInput.equalsIgnoreCase("add")) {
-                break;
+                addVehicals();
             } else if (userInput.equalsIgnoreCase("remove")) {
-                break;
+                removeVehicals();
             } else if (userInput.equalsIgnoreCase("show")) {
-                break;
+                showVehicals();
             }
             if (userInput.equalsIgnoreCase("end")) {
                 System.out.println("Showroom is closed");
@@ -80,6 +80,44 @@ public class VehicalShowroom {
 
         if (vehical.isSports()) {
             expectedVisitor = expectedVisitor + 20;
+        }
+    }
+
+    private static void showVehicals() {
+        if (listOfVehicals.isEmpty()) {
+            System.out.println("No cars in showroom");
+            return;
+        }
+
+        for (int i = 0; i < listOfVehicals.size(); i++) {
+            System.out.println("");
+            System.out.print("Number " + (i + 1) + " is : ");
+            listOfVehicals.get(i).display();
+        }
+
+        System.out.println("Todays Expected visitor count is : " + expectedVisitor);
+    }
+
+    private static void removeVehicals() {
+        if (listOfVehicals.isEmpty()) {
+            System.out.println("Currently the showroom has no vehical to present.Please come later.");
+            return;
+        }
+
+        showVehicals();
+        System.out.print("Select a vehical from (1 to " + listOfVehicals.size() + ") to remove from the listOfVehicals: ");
+
+        int whichOneToRemove = scanner.nextInt();
+
+        if (whichOneToRemove <= 0 || whichOneToRemove > listOfVehicals.size()) {
+            System.out.println("Your selected vehical is not present.Please try again.");
+        } else {
+            expectedVisitor = listOfVehicals.get(whichOneToRemove - 1).isSports() ? expectedVisitor - 20 : expectedVisitor;
+
+
+            listOfVehicals.remove(whichOneToRemove - 1);
+
+            System.out.println("The seleted vehical is removed from the listOfVehicals");
         }
     }
 
