@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class VehicalShowroom extends Vehical {
@@ -26,19 +27,23 @@ public class VehicalShowroom extends Vehical {
 
         while (true) {
             System.out.print("Enter command: ");
-            userInput = scanner.next();
+            try {
+                userInput = scanner.next();
 
-            if (userInput.equalsIgnoreCase("add")) {
-                addVehicals();
-            } else if (userInput.equalsIgnoreCase("remove")) {
-                removeCar();
-            } else if (userInput.equalsIgnoreCase("show")) {
-                showVehicals();
-            } else if (userInput.equalsIgnoreCase("end")) {
-                System.out.println("Showroom is closed");
-                break;
-            } else {
-                System.out.println(userInput + " is a invalid type command. Please put a valid type command. Valid type commands are add, remove, show");
+                if (userInput.equalsIgnoreCase("add")) {
+                    addVehicals();
+                } else if (userInput.equalsIgnoreCase("remove")) {
+                    removeVehicals();
+                } else if (userInput.equalsIgnoreCase("show")) {
+                    showVehicals();
+                } else if (userInput.equalsIgnoreCase("end")) {
+                    System.out.println("Showroom is closed");
+                    break;
+                } else {
+                    System.out.println(userInput + " is a invalid type command. Please put a valid type command. Valid type commands are add, remove, show, end");
+                }
+            } catch(InputMismatchException e){
+                System.out.println("Please provide the appropriate data");
             }
         }
         saveVehicals();
@@ -129,13 +134,14 @@ public class VehicalShowroom extends Vehical {
         System.out.println("Todays Expected visitor count is : " + expectedVisitor);
     }
 
-    private static void removeCar() {
+    private static void removeVehicals() {
         if (listOfVehicals.isEmpty()) {
             System.out.println("Currently the showroom has no vehical to present.Please come later.");
             return;
         }
 
-        showVehicals();
+        
+//        showVehicals();
         System.out.print("Select a vehical from (1 to " + listOfVehicals.size() + ") to remove from the listOfVehicals: ");
 
         int whichOneToRemove = scanner.nextInt();
@@ -185,7 +191,7 @@ public class VehicalShowroom extends Vehical {
         } catch (FileNotFoundException e) {
             System.out.println("Running for the first time ");
 
-        } catch (Exception e) {
+        } catch (IOException | NumberFormatException e) {
             System.out.println("Unknown error");
         }
     }
